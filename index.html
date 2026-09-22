@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POSSE課題</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen text-gray-800">
+
+    <div class="max-w-5xl mx-auto px-4 py-12">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold mb-2">チームメンバー一覧</h1>
+            <p class="text-gray-600">今週覚えた配列・オブジェクト・forEachを活用して動的に生成しています。</p>
+        </header>
+
+        <div class="flex justify-center gap-3 mb-8">
+            <button onclick="filterMembers('全員')" class="filter-btn px-4 py-2 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition">全員</button>
+            <button onclick="filterMembers('エンジニア')" class="filter-btn px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">エンジニア</button>
+            <button onclick="filterMembers('デザイナー')" class="filter-btn px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 transition">デザイナー</button>
+        </div>
+        <div id="member-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </div>
+
+    <script>
+        const members = [
+            {name: "佐藤 健太",role: "エンジニア",comment: "フロントエンドからバックエンドまで幅広く担当します！よろしくお願いします。"},
+            {name: "鈴木 美咲",role: "デザイナー",comment: "ユーザーにとって使いやすく、ワクワクするUIデザインを追求しています。"},
+            {name: "高橋 翔",role: "エンジニア",comment: "主にJavaScriptを使ったインタラクティブな表現が得意です。"},
+            {name: "田中 葵",role: "デザイナー",comment: "ブランドの世界観を大切にしたクリエイティブ制作を心がけています。"},
+            {name: "渡辺 蓮",role: "エンジニア",comment: "コードの綺麗さとパフォーマンスの最適化を意識して開発しています。"}
+        ];
+
+        function renderMembers(targetArray) {
+            const container = document.getElementById('member-container');
+            container.innerHTML = '';
+            targetArray.forEach(member => {
+                const card = document.createElement('div');
+                card.className = "bg-white rounded-xl shadow-md p-6 flex flex-col justify-between hover:shadow-lg transition";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h2 class="text-xl font-bold text-gray-900">${member.name}</h2>
+                            <span class="px-3 py-1 text-xs font-semibold rounded-full ${member.role === 'エンジニア' ? 'bg-blue-100 text-blue-700' : 'bg-pink-100 text-pink-700'}">${member.role}</span>
+                        </div>
+                        <p class="text-gray-600 text-sm leading-relaxed">${member.comment}</p>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function filterMembers(role) {
+            console.log(`選択されたフィルター: ${role}`); 
+
+            if (role === '全員') {
+                console.log(members); 
+                renderMembers(members);
+            } else {
+                const filtered = members.filter(member => member.role === role);
+                console.log(filtered); 
+                renderMembers(filtered);
+            }
+        }
+
+        renderMembers(members);
+    </script>
+</body>
